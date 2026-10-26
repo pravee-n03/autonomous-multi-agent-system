@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autonomous Multi-Agent Intelligence Studio</title>
+    <meta name="description" content="Professional autonomous multi-agent research studio powered by LangGraph, Gemini, and Tavily live search with dynamic quality gates.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <!-- ─── Minimal Ambient Background ─── -->
+    <div class="bg-canvas"></div>
+
+    <!-- ─── Studio Header ─── -->
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo">
+                <div class="logo-mark">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                        <polyline points="2 17 12 22 22 17"></polyline>
+                        <polyline points="2 12 12 17 22 12"></polyline>
+                    </svg>
+                </div>
+                <div class="logo-text-group">
+                    <div class="logo-title-row">
+                        <span class="logo-title">AGENT STUDIO</span>
+                        <span class="logo-pill">LangGraph Multi-Agent</span>
+                    </div>
+                    <p class="logo-sub">Autonomous Orchestration · Live Web Research · Quality Gate</p>
+                </div>
+            </div>
+
+            <div class="header-controls">
+                <div class="header-status" id="headerStatus">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Network Idle</span>
+                </div>
+                <button type="button" class="btn-new-run" id="btnNewRun" onclick="resetToNewRun()" style="display:none;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    New Task
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ─── Main Studio Workspace ─── -->
+    <main class="main">
+        <!-- Command & Objective Input Section -->
+        <section class="command-section" id="inputSection">
+            <div class="command-hero">
+                <div class="hero-kicker">
+                    <span class="kicker-dot"></span>
+                    AUTONOMOUS RESEARCH ORCHESTRATION
+                </div>
+                <h1 class="hero-title">Deploy a multi-agent team on any objective.</h1>
+                <p class="hero-sub">
+                    5 specialized AI agents autonomously formulate strategy, query live web data, cross-examine sources, synthesize deep reports, and audit their own outputs against editorial standards.
+                </p>
+            </div>
+
+            <div class="command-card">
+                <div class="command-header">
+                    <label for="taskInput" class="command-label">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="4 17 10 11 4 5"></polyline>
+                            <line x1="12" y1="19" x2="20" y2="19"></line>
+                        </svg>
+                        Objective & Research Directive
+                    </label>
+                    <span class="command-hint">Supports complex, multi-faceted analytical topics</span>
+                </div>
+
+                <div class="command-input-wrapper">
+                    <textarea id="taskInput" rows="3" placeholder="What should the agents investigate and report on?">Analyze the latest inflation figures and interest rate trajectory in the European Union, including ECB policy forecasts.</textarea>
+                </div>
+
+                <!-- Prompt presets -->
+                <div class="preset-strip">
+                    <span class="preset-label">Suggested Briefs:</span>
+                    <div class="preset-buttons">
+                        <button type="button" class="preset-btn" onclick="setPreset('European Union inflation trends and ECB monetary policy outlook')">
+                            <span class="preset-tag">Macro</span> EU Inflation & ECB
+                        </button>
+                        <button type="button" class="preset-btn" onclick="setPreset('State of humanoid robotics in industrial manufacturing and logistics')">
+                            <span class="preset-tag">Robotics</span> Humanoid Robots
+                        </button>
+                        <button type="button" class="preset-btn" onclick="setPreset('Commercial viability and milestones in nuclear fusion energy')">
+                            <span class="preset-tag">Energy</span> Nuclear Fusion
+                        </button>
+                        <button type="button" class="preset-btn" onclick="setPreset('Enterprise adoption and safety guardrails of autonomous AI reasoning agents')">
+                            <span class="preset-tag">AI Systems</span> Agentic Guardrails
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Controls & Deploy Button -->
+                <div class="command-footer">
+                    <div class="footer-params">
+                        <div class="param-item">
+                            <label for="revisionsInput" class="param-label">Max Quality Loops</label>
+                            <select id="revisionsInput" class="param-select">
+                                <option value="1">1 Reflection Pass</option>
+                                <option value="2" selected>2 Reflection Passes</option>
+                                <option value="3">3 Reflection Passes</option>
+                            </select>
+                        </div>
+                        <div class="param-badge">
+                            <span class="param-dot"></span>
+                            <span>Tavily Live Web · Gemini 2.5</span>
+                        </div>
+                    </div>
+
+                    <button class="btn-deploy" id="btnRun" onclick="startWorkflow()">
+                        <span>Deploy Multi-Agent Team</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Operations Workspace (Visible once deployed) -->
+        <section class="operations-section" id="workflowSection" style="display:none;">
+            <!-- Studio Telemetry Ribbon -->
+            <div class="telemetry-grid">
+                <div class="telemetry-card">
+                    <span class="telemetry-caption">Active Phase</span>
+                    <div class="telemetry-val-group">
+                        <span class="pulse-indicator"></span>
+                        <span class="telemetry-val" id="activeAgentVal">Initializing...</span>
+                    </div>
+                </div>
+
+                <div class="telemetry-card">
+                    <span class="telemetry-caption">Live Tool Calls</span>
+                    <div class="telemetry-val-group">
+                        <span class="telemetry-val" id="toolCallsVal">0</span>
+                        <span class="telemetry-unit">queries executed</span>
+                    </div>
+                </div>
+
+                <div class="telemetry-card">
+                    <span class="telemetry-caption">Quality Audit Score</span>
+                    <div class="telemetry-val-group">
+                        <span class="telemetry-val" id="qualityScoreVal">— / 10</span>
+                        <span class="telemetry-unit">rigor rating</span>
+                    </div>
+                </div>
+
+                <div class="telemetry-card">
+                    <span class="telemetry-caption">Gate Decision</span>
+                    <div class="telemetry-val-group">
+                        <span class="telemetry-badge verdict-pending" id="verdictVal">Evaluating Quality</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agent Flow Topology Ribbon -->
+            <div class="topology-card">
+                <div class="topology-header">
+                    <div class="topology-title-group">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        <h2 class="topology-title">Autonomous Execution Pipeline</h2>
+                    </div>
+                    <div class="topology-rules">
+                        <span class="rule-chip pass">Score ≥ 8 ➔ Certified Complete</span>
+                        <span class="rule-chip revise">Score &lt; 8 ➔ Critique Deep-Dive Loop</span>
+                    </div>
+                </div>
+
+                <div class="topology-pipeline" id="workflowGraph">
+                    <!-- Graph nodes dynamically injected by app.js -->
+                </div>
+            </div>
+
+            <!-- Two-Column Operations Layout: Agent Activity & Final Document -->
+            <div class="studio-grid">
+                <!-- Left: Agent Reasoning & Activity Log -->
+                <div class="operations-panel">
+                    <div class="panel-header">
+                        <div class="panel-title-group">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+                                <rect x="9" y="9" width="6" height="6"></rect>
+                                <line x1="9" y1="1" x2="9" y2="4"></line>
+                                <line x1="15" y1="1" x2="15" y2="4"></line>
+                                <line x1="9" y1="20" x2="9" y2="23"></line>
+                                <line x1="15" y1="20" x2="15" y2="23"></line>
+                                <line x1="20" y1="9" x2="23" y2="9"></line>
+                                <line x1="20" y1="14" x2="23" y2="14"></line>
+                                <line x1="1" y1="9" x2="4" y2="9"></line>
+                                <line x1="1" y1="14" x2="4" y2="14"></line>
+                            </svg>
+                            <h3 class="panel-title">Agent Operations Feed</h3>
+                        </div>
+                        <span class="feed-status">Live Communication</span>
+                    </div>
+
+                    <div class="operations-feed" id="activityLog">
+                        <div class="activity-empty">
+                            <div class="clean-spinner"></div>
+                            <p>Connecting to multi-agent graph stream…</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Synthesized Executive Report -->
+                <div class="document-panel">
+                    <div class="document-header">
+                        <div class="document-title-group">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                            <h3 class="panel-title">Synthesized Intelligence Brief</h3>
+                        </div>
+
+                        <div class="document-actions">
+                            <span class="revision-pill" id="revisionBadge" style="display:none;">Initial Draft</span>
+                            <button type="button" class="btn-action" id="btnCopy" onclick="copyReport()" title="Copy Markdown Content">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <span>Copy</span>
+                            </button>
+                            <button type="button" class="btn-action" onclick="window.print()" title="Print / Export PDF">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                                    <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                                    <rect x="6" y="14" width="12" height="8"></rect>
+                                </svg>
+                                <span>Print</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="document-body" id="reportContent">
+                        <div class="document-placeholder">
+                            <div class="doc-icon-wrap">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#a1a1aa" stroke-width="1.5">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                </svg>
+                            </div>
+                            <h4>Awaiting Report Synthesis</h4>
+                            <p>The report will render here with full typography as the Generation Agent synthesizes verified research.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
